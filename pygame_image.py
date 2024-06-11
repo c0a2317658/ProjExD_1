@@ -17,6 +17,9 @@ def main():
     kk_rct = kk_img.get_rect() #こうかトンレクとの中質
     kk_rct.center = 300,200
 
+    speed = 1
+    m_speed = 2 * speed
+    
     tmr = 0
     while True:
         for event in pg.event.get():
@@ -29,15 +32,18 @@ def main():
         screen.blit(bg_img2, [-x+4800, 0])
 
         key_list = pg.key.get_pressed() #全キー
+        m_x = -speed
+        m_y = 0
         if key_list[pg.K_UP]: #上矢印が押されたら
-            kk_rct.move_ip((0,-1))
+            m_y -= speed
         if key_list[pg.K_DOWN]:
-            kk_rct.move_ip((0,1))
-        if key_list[pg.K_LEFT]:
-            kk_rct.move_ip((-1,0))
+            m_y += speed
         if key_list[pg.K_RIGHT]:
-            kk_rct.move_ip((1,0))
-        screen.blit(kk_img, kk_rct) #kk_imgをkk_rctの設定に従って貼り付け
+            m_x += m_speed
+        
+        kk_rct.move_ip(m_x,m_y)
+        screen.blit(kk_img, kk_rct.center)
+
         pg.display.update()
         tmr += 1        
         clock.tick(200)
